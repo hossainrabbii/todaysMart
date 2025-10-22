@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,19 +14,33 @@ import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registrationSchema } from "./registerValidation";
-
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
+import { registerUser } from "@/services/AuthService";
+import { toast } from "sonner";
 
 const RegisterForm = () => {
+  // form
   const form = useForm({
     resolver: zodResolver(registrationSchema),
   });
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+
+  const password = form.watch("password");
+  const confirmPassword = form.watch("confirmPassword");
+  // onsubmit func
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    // console.log(data);
+    try {
+      const response = await registerUser(data);
+      if (response?.success) {
+        toast.success(response?.message || "Registration Successful.");
+        form.reset();
+      }
+      if (!response?.success) {
+        toast.warning(response?.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.log("page reg", error);
+      toast.error("Registration failed");
+    }
   };
   return (
     <div className="bg-white p-4 rounded">
@@ -41,6 +54,7 @@ const RegisterForm = () => {
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input
+                    type="text"
                     placeholder="Name"
                     {...field}
                     value={field.value || ""}
@@ -58,6 +72,7 @@ const RegisterForm = () => {
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
+                    type="email"
                     placeholder="Email"
                     {...field}
                     value={field.value || ""}
@@ -75,6 +90,7 @@ const RegisterForm = () => {
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
+                    type="password"
                     placeholder="Password"
                     {...field}
                     value={field.value || ""}
@@ -92,16 +108,26 @@ const RegisterForm = () => {
                 <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
                   <Input
+                    type="password"
                     placeholder="Confirm Password"
                     {...field}
                     value={field.value || ""}
                   />
                 </FormControl>
-                <FormMessage />
+                {confirmPassword && confirmPassword !== password ? (
+                  <FormMessage>Password does not match!</FormMessage>
+                ) : (
+                  <FormMessage />
+                )}
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button
+            type="submit"
+            disabled={confirmPassword !== password && !!confirmPassword}
+          >
+            Register
+          </Button>
         </form>
       </Form>
     </div>
