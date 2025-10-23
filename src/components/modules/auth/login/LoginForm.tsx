@@ -1,6 +1,5 @@
 "use client";
 
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,57 +12,44 @@ import {
 import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registrationSchema } from "./registerValidation";
-import { registerUser } from "@/services/AuthService";
-import { toast } from "sonner";
 
-const RegisterForm = () => {
+import { loginUser } from "@/services/AuthService";
+import { toast } from "sonner";
+import { loginSchema } from "./loginValidation";
+import Link from "next/link";
+
+const LoginForm = () => {
   // form
   const form = useForm({
-    resolver: zodResolver(registrationSchema),
+    resolver: zodResolver(loginSchema),
   });
+  const {
+    formState: { isSubmitting },
+  } = form;
 
-  const password = form.watch("password");
-  const confirmPassword = form.watch("confirmPassword");
   // onsubmit func
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    // console.log(data);
+    console.log(data);
     try {
-      const response = await registerUser(data);
+      const response = await loginUser(data);
       if (response?.success) {
-        toast.success(response?.message || "Registration Successful.");
+        toast.success(response?.message || "Login Successful.");
         form.reset();
       }
       if (!response?.success) {
         toast.warning(response?.message || "Something went wrong");
       }
     } catch (error) {
-      console.log("page reg", error);
-      toast.error("Registration failed");
+      console.log(error);
+      toast.error("Login failed");
     }
   };
   return (
     <div className="bg-white p-4 rounded">
+      <h3 className="text-xl font-semibold mb-8">Login now</h3>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem className="w-md">
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="Name"
-                    {...field}
-                    value={field.value || ""}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="email"
@@ -100,38 +86,15 @@ const RegisterForm = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem className="w-md">
-                <FormLabel>Confirm Password</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Confirm Password"
-                    {...field}
-                    value={field.value || ""}
-                  />
-                </FormControl>
-                {confirmPassword && confirmPassword !== password ? (
-                  <FormMessage>Password does not match!</FormMessage>
-                ) : (
-                  <FormMessage />
-                )}
-              </FormItem>
-            )}
-          />
-          <Button
-            type="submit"
-            disabled={confirmPassword !== password && !!confirmPassword}
-          >
-            Register
+
+          <Button type="submit">
+            {isSubmitting ? <span>Login...</span> : <span>Login</span>}
           </Button>
         </form>
       </Form>
+      <Link href="/register">Register</Link>
     </div>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;
