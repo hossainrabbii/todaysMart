@@ -1,14 +1,9 @@
-import { getCurrentUser } from "@/services/AuthService";
-
-const HomePage = async () => {
-  const user: any = await getCurrentUser();
+"use client";
+import { useUser } from "@/context/UserContext";
+const HomePage = () => {
+  const user = useUser();
   console.log(user);
-  return (
-    <div>
-      Welcome to home page
-      <>{user ? <span> - {user?.email}</span> : <span></span>}</>
-    </div>
-  );
+  return <div>Welcome to home page</div>;
 };
 
 export default HomePage;

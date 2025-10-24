@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { loginUser } from "@/services/AuthService";
+import { loginUser, logOutUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
 import Link from "next/link";
@@ -47,7 +47,13 @@ const LoginForm = () => {
   return (
     <div className="bg-white p-4 rounded">
       <h3 className="text-xl font-semibold mb-8">Login now</h3>
-
+      <button
+        onClick={() => {
+          logOutUser();
+        }}
+      >
+        Logout
+      </button>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField

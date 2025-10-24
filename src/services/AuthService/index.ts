@@ -51,3 +51,8 @@ export const getCurrentUser = async () => {
   const decodedData = accessToken ? await jwtDecode(accessToken) : null;
   return decodedData;
 };
+
+export const logOutUser = async () => {
+  const removeToken = (await cookies()).delete("accessToken");
+  return null;
+};
