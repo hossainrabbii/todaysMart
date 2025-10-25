@@ -46,13 +46,34 @@ export const loginUser = async (userData: FieldValues) => {
   }
 };
 
+// current User
 export const getCurrentUser = async () => {
   const accessToken = (await cookies()).get("accessToken")?.value;
   const decodedData = accessToken ? await jwtDecode(accessToken) : null;
   return decodedData;
 };
 
+// logout
 export const logOutUser = async () => {
   const removeToken = (await cookies()).delete("accessToken");
   return null;
+};
+
+// reCaptcha varification
+export const reCaptchaVarification = async (value: string) => {
+  try {
+    const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        secret: process.env.NEXT_PUBLIC_RECAPTCHA_SERVER_KEY!,
+        response: value,
+      }),
+    });
+    return res.json();
+  } catch (error) {
+    return error;
+  }
 };

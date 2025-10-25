@@ -13,12 +13,20 @@ import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { loginUser, logOutUser } from "@/services/AuthService";
+import {
+  loginUser,
+  logOutUser,
+  reCaptchaVarification,
+} from "@/services/AuthService";
 import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
 import Link from "next/link";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useState } from "react";
+// import { cookies } from "next/headers";
 
 const LoginForm = () => {
+  const [reCaptchaStatus, setRecaptchaStatus] = useState(false);
   // form
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -27,6 +35,13 @@ const LoginForm = () => {
     formState: { isSubmitting },
   } = form;
 
+  // handle recaptcha
+  const handleReCaptcha = async (value: string | null) => {
+    const res = await reCaptchaVarification(value!);
+    if (res?.success) {
+      setRecaptchaStatus(true);
+    }
+  };
   // onsubmit func
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
@@ -93,7 +108,11 @@ const LoginForm = () => {
             )}
           />
 
-          <Button type="submit">
+          <ReCAPTCHA
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY as string}
+            onChange={handleReCaptcha}
+          />
+          <Button type="submit" disabled={!reCaptchaStatus}>
             {isSubmitting ? <span>Login...</span> : <span>Login</span>}
           </Button>
         </form>
