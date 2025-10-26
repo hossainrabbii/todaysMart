@@ -55,8 +55,7 @@ export const getCurrentUser = async () => {
 
 // logout
 export const logOutUser = async () => {
-  const removeToken = (await cookies()).delete("accessToken");
-  return null;
+  (await cookies()).delete("accessToken");
 };
 
 // reCaptcha varification
