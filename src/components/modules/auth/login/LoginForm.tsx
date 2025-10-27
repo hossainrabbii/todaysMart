@@ -23,7 +23,6 @@ import { loginSchema } from "./loginValidation";
 import Link from "next/link";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
-// import { cookies } from "next/headers";
 
 const LoginForm = () => {
   const [reCaptchaStatus, setRecaptchaStatus] = useState(false);
@@ -31,6 +30,9 @@ const LoginForm = () => {
   const form = useForm({
     resolver: zodResolver(loginSchema),
   });
+
+  console.log('form: ',form);
+  console.log('useForm: ',useForm);
   const {
     formState: { isSubmitting },
   } = form;
