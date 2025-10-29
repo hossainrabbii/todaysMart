@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import ImageUploader from "@/components/ui/core/ImageUploader";
+import ImagePreviewer from "@/components/ui/core/ImageUploader/ImagePreviewer";
 import {
   Form,
   FormControl,
@@ -11,9 +12,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 const CreateShopForm = () => {
+  const [imageFiles, setImageFiles] = useState<File[] | []>([]);
+  const [imagePreview, setImagePreview] = useState<string[] | []>([]);
+
   const form = useForm();
   // console.log(form);
   const {
@@ -168,14 +173,28 @@ const CreateShopForm = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel></FormLabel>
+                  <FormLabel>Add tags</FormLabel>
                   <FormControl>
                     <Textarea {...field} value={field.value || ""}></Textarea>
                   </FormControl>
                 </FormItem>
               )}
             />
-            <ImageUploader />
+            {imagePreview.length === 1 ? (
+              <ImagePreviewer
+                className="mt-2"
+                setImageFiles={setImageFiles}
+                imagePreview={imagePreview}
+                setImagePreview={setImagePreview}
+              />
+            ) : (
+              <ImageUploader
+                label="Upload Logo"
+                className="2"
+                setImagePreview={setImagePreview}
+                setImageFiles={setImageFiles}
+              />
+            )}
           </div>
 
           <Button type="submit" className="mt-4">

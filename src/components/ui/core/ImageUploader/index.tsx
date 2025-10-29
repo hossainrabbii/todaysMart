@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Input } from "../../input";
-import Image from "next/image";
+import { cn } from "@/lib/utils";
 
-const ImageUploader = () => {
-  const [imageFiles, setImageFiles] = useState<File[] | []>([]);
-  const [imagePreview, setImagePreview] = useState<string[] | []>([]);
-
+type TimageUploader = {
+  label?: string;
+  className?: string;
+  setImageFiles: Dispatch<SetStateAction<[] | File[]>>;
+  setImagePreview: Dispatch<SetStateAction<[] | string[]>>;
+};
+const ImageUploader = ({
+  label,
+  className,
+  setImageFiles,
+  setImagePreview,
+}: TimageUploader) => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
     setImageFiles((prev) => [...prev, file]);
@@ -20,10 +28,9 @@ const ImageUploader = () => {
       event.target.value = "";
     }
   };
-  console.log(imagePreview);
 
   return (
-    <div>
+    <div className={cn("", className)}>
       <Input
         type="file"
         multiple
@@ -36,14 +43,8 @@ const ImageUploader = () => {
         htmlFor="image-uploader"
         className="w-36 h-36 flex justify-center items-center border-dashed border-2 cursor-pointer rounded-2xl m-4 border-gray-300 hover:bg-gray-200"
       >
-        Upload Logo
+        {label}
       </label>
-
-      <div className="grid grid-wrap gap-2">
-        {imagePreview.map((imageFiles, index) => (
-          <Image src={imageFiles} width={350} height={350} alt="Image" />
-        ))}
-      </div>
     </div>
   );
 };
