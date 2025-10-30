@@ -12,21 +12,51 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { createShop } from "@/services/Shop";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { createShopValidationSchema } from "./shopValidation";
 
 const CreateShopForm = () => {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
 
-  const form = useForm();
+  const form = useForm({
+    resolver: zodResolver(createShopValidationSchema),
+  });
   // console.log(form);
   const {
     formState: { isSubmitting },
   } = form;
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    const servicesOffered = data?.servicesOffered
+      .split(",")
+      .map((service: string) => service.trim())
+      .filter((service: string) => service !== "");
+
+    const modifiedData = {
+      ...data,
+      servicesOffered: servicesOffered,
+      establishedYear: Number(data?.establishedYear),
+    };
+
+    try {
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(modifiedData));
+      formData.append("logo", imageFiles[0]);
+      const response = await createShop(formData);
+      if (response?.success) {
+        toast.success(response?.message || "Shop created successfully.");
+      }
+      if (!response.success) {
+        toast.error(response?.message || "Something went wrong.");
+      }
+    } catch (error: any) {
+      console.error(error);
+    }
   };
   return (
     <div className="">
@@ -80,7 +110,11 @@ const CreateShopForm = () => {
                 <FormItem>
                   <FormLabel>Contact Number</FormLabel>
                   <FormControl>
-                    <Input {...field} value={field.value || ""}></Input>
+                    <Input
+                      {...field}
+                      value={field.value || ""}
+                      type="number"
+                    ></Input>
                   </FormControl>
                 </FormItem>
               )}
@@ -169,11 +203,11 @@ const CreateShopForm = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2">
             <FormField
-              name="tags"
+              name="servicesOffered"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Add tags</FormLabel>
+                  <FormLabel>Services Offered</FormLabel>
                   <FormControl>
                     <Textarea {...field} value={field.value || ""}></Textarea>
                   </FormControl>

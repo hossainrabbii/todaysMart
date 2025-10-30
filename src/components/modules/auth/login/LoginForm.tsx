@@ -31,8 +31,6 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  console.log('form: ',form);
-  console.log('useForm: ',useForm);
   const {
     formState: { isSubmitting },
   } = form;
