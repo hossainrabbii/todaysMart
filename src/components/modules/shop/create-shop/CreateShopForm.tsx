@@ -232,7 +232,7 @@ const CreateShopForm = () => {
           </div>
 
           <Button type="submit" className="mt-4">
-            Submit
+            {isSubmitting ? <p>Submitting</p> : <p>Submit</p>}
           </Button>
         </form>
       </Form>
