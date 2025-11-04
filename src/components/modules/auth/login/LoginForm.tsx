@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import {
   loginUser,
   logOutUser,
@@ -23,9 +22,11 @@ import { loginSchema } from "./loginValidation";
 import Link from "next/link";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const LoginForm = () => {
   const [reCaptchaStatus, setRecaptchaStatus] = useState(false);
+
   // form
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -35,21 +36,34 @@ const LoginForm = () => {
     formState: { isSubmitting },
   } = form;
 
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirectPath");
+  const router = useRouter();
+
   // handle recaptcha
   const handleReCaptcha = async (value: string | null) => {
     const res = await reCaptchaVarification(value!);
     if (res?.success) {
       setRecaptchaStatus(true);
+      if (redirect) {
+        router.push
+      }
     }
   };
   // onsubmit func
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+ 
     try {
       const response = await loginUser(data);
       if (response?.success) {
         toast.success(response?.message || "Login Successful.");
         form.reset();
+        if (redirect) {
+          router.push(redirect)
+        }
+        else {
+          router.push('/profile')
+        }
       }
       if (!response?.success) {
         toast.warning(response?.message || "Something went wrong");
@@ -62,13 +76,7 @@ const LoginForm = () => {
   return (
     <div className="bg-white p-4 rounded">
       <h3 className="text-xl font-semibold mb-8">Login now</h3>
-      <button
-        onClick={() => {
-          logOutUser();
-        }}
-      >
-        Logout
-      </button>
+  
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField

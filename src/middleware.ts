@@ -14,6 +14,7 @@ export const middleware = async (request: NextRequest) => {
   const { pathname } = request.nextUrl;
 
   const userInfo = await getCurrentUser();
+  console.log(userInfo);
 
   if (!userInfo) {
     if (authRoutes.includes(pathname)) {
@@ -27,7 +28,6 @@ export const middleware = async (request: NextRequest) => {
       );
     }
   }
-
   if (userInfo?.role && roleBasedPrivateRoutes[userInfo?.role as Role]) {
     const routes = roleBasedPrivateRoutes[userInfo?.role as Role];
     if (routes.some((route) => pathname.match(route))) {
