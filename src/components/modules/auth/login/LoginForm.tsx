@@ -45,24 +45,19 @@ const LoginForm = () => {
     const res = await reCaptchaVarification(value!);
     if (res?.success) {
       setRecaptchaStatus(true);
-      if (redirect) {
-        router.push
-      }
     }
   };
   // onsubmit func
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
- 
     try {
       const response = await loginUser(data);
       if (response?.success) {
         toast.success(response?.message || "Login Successful.");
         form.reset();
         if (redirect) {
-          router.push(redirect)
-        }
-        else {
-          router.push('/profile')
+          router.push(redirect);
+        } else {
+          router.push("/user/dashboard");
         }
       }
       if (!response?.success) {
@@ -76,7 +71,7 @@ const LoginForm = () => {
   return (
     <div className="bg-white p-4 rounded">
       <h3 className="text-xl font-semibold mb-8">Login now</h3>
-  
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField

@@ -6,11 +6,14 @@ import {
   Bot,
   Command,
   Frame,
+  LayoutDashboardIcon,
   LifeBuoy,
   Map,
   PieChart,
   Send,
+  Settings,
   Settings2,
+  ShoppingBasket,
   SquareTerminal,
 } from "lucide-react";
 
@@ -32,87 +35,48 @@ import { useUser } from "@/context/UserContext";
 const data = {
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: "Dashboard",
+      url: "/user/dashboard",
+      icon: LayoutDashboardIcon,
+    },
+    {
+      title: "Shop",
+      url: "/user/shop/all-products",
+      icon: ShoppingBasket,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Manage Products",
+          url: "/user/shop/all-products",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Manage Categories",
+          url: "/user/shop/categories",
         },
         {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
+          title: "Manage Brands",
+          url: "/user/shop/brands",
         },
       ],
     },
+
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
+      title: "Setting",
+      url: "/user/setting/all-products",
+      icon: Settings,
+      isActive: true,
       items: [
         {
-          title: "Introduction",
-          url: "#",
+          title: "Manage Products",
+          url: "/user/setting/all-products",
         },
         {
-          title: "Get Started",
-          url: "#",
+          title: "Manage Categories",
+          url: "/user/setting/categories",
         },
         {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
+          title: "Manage Brands",
+          url: "/user/setting/brands",
         },
       ],
     },
@@ -150,6 +114,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
+  // console.log(user);
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -171,8 +136,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {/* <NavProjects projects={data.projects} /> */}
+        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />
