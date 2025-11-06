@@ -5,14 +5,40 @@ import { TableViewer } from "@/components/ui/core/Table";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import { Trash } from "lucide-react";
+import DeleteConfirmationModal from "@/components/ui/core/Modals/DeleteConfirmationModal";
+import { useState } from "react";
+import { deleteCategory } from "@/services/Category";
+import { toast } from "sonner";
 
 type TCategoriesProps = {
   categories: ICategory[];
 };
 
 const ManageCategory = ({ categories }: TCategoriesProps) => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const handleDelete = (data: ICategory) => {
-    console.log(data);
+    setSelectedId(data?._id);
+    setSelectedItem(data?.name);
+    setModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      if (selectedId) {
+        const res = await deleteCategory(selectedId);
+        console.log(res);
+        if (res.success) {
+          toast.success(res.message);
+          setModalOpen(false);
+        } else {
+          toast.error(res.message);
+        }
+      }
+    } catch (err: any) {
+      console.error(err?.message);
+    }
   };
 
   const columns: ColumnDef<ICategory>[] = [
@@ -63,6 +89,7 @@ const ManageCategory = ({ categories }: TCategoriesProps) => {
       ),
     },
   ];
+  
   return (
     <>
       <div className="flex justify-between">
@@ -72,6 +99,12 @@ const ManageCategory = ({ categories }: TCategoriesProps) => {
       <div className="my-4">
         <TableViewer columns={columns} data={categories} />
       </div>
+      <DeleteConfirmationModal
+        name={selectedItem}
+        isOpen={isModalOpen}
+        onOpenChange={setModalOpen}
+        onConfirm={handleDeleteConfirm}
+      />
     </>
   );
 };

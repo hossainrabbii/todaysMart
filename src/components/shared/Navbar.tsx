@@ -25,7 +25,7 @@ const Navbar = () => {
     setIsLoading(true);
 
     if (protectedRoutes.some((route) => pathname.match(route))) {
-      router.push('/')
+      router.push("/");
     }
   };
 
@@ -56,9 +56,13 @@ const Navbar = () => {
                     <DropdownMenuContent>
                       <DropdownMenuLabel>My Account</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>Profile</DropdownMenuItem>
-                      <DropdownMenuItem>Billing</DropdownMenuItem>
-                      <DropdownMenuItem>Shop</DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link href="/user/dashboard">Profile</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        {" "}
+                        <Link href="/user/all=products">Shop</Link>
+                      </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <Button className="bg-red-600 hover:bg-red-700 my-2">
                         <LogOut></LogOut>

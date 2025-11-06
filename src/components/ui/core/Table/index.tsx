@@ -31,12 +31,11 @@ export function TableViewer<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
   });
 
-  console.log('from the table component',data);
 
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div className="overflow-hidden rounded-sm border">
       <Table>
-        <TableHeader>
+        <TableHeader className="bg-gray-200 text-gray-800 text-lg">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
