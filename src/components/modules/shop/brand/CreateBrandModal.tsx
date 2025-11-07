@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -21,13 +20,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { createCategory } from "@/services/Category";
+import { createBrand } from "@/services/Brand";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export function CreateCategoryModal() {
+export function CreateBrandModal() {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
   // form
@@ -41,11 +39,11 @@ export function CreateCategoryModal() {
     try {
       const formData = new FormData();
       formData.append("data", JSON.stringify(data));
-      formData.append("icon", imageFiles[0] as File);
+      formData.append("logo", imageFiles[0] as File);
 
-      const response = await createCategory(formData);
+      const response = await createBrand(formData);
       if (response?.success) {
-        toast.success(response.message || "Category created successfully.");
+        toast.success(response.message || "Brand is created successfully.");
       } else {
         toast.error(response.message || "Something went wrong");
       }
@@ -61,12 +59,12 @@ export function CreateCategoryModal() {
             variant="outline"
             className="cursor-pointer success bg-green-500 text-white"
           >
-            Create Category
+            Create Brand
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Create a new category</DialogTitle>
+            <DialogTitle>Create a new brand</DialogTitle>
 
             <hr className="my-2"></hr>
           </DialogHeader>
@@ -77,7 +75,7 @@ export function CreateCategoryModal() {
                 name="name"
                 render={({ field }) => (
                   <FormItem className="">
-                    <FormLabel>Category Name</FormLabel>
+                    <FormLabel>Brand Name</FormLabel>
                     <FormControl>
                       <Input type="name" {...field} value={field.value || ""} />
                     </FormControl>
@@ -87,21 +85,6 @@ export function CreateCategoryModal() {
               />
 
               <div className="grid grid-cols-1 md:grid-cols-2">
-                <FormField
-                  name="description"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          value={field.value || ""}
-                        ></Textarea>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
                 {imagePreview.length === 1 ? (
                   <ImagePreviewer
                     className=""

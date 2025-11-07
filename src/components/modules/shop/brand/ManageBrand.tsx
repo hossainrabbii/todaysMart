@@ -1,24 +1,24 @@
 "use client";
-import { ICategory } from "@/types";
-import { CreateCategoryModal } from "./CreateCategoryModal";
+
+import { IBrand } from "@/types/brand";
+import { CreateBrandModal } from "./CreateBrandModal";
 import { TableViewer } from "@/components/ui/core/Table";
-import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
+import { ColumnDef } from "@tanstack/react-table";
 import { Trash } from "lucide-react";
-import DeleteConfirmationModal from "@/components/ui/core/Modals/DeleteConfirmationModal";
 import { useState } from "react";
-import { deleteCategory } from "@/services/Category";
+import DeleteConfirmationModal from "@/components/ui/core/Modals/DeleteConfirmationModal";
+import { deleteBrand } from "@/services/Brand";
 import { toast } from "sonner";
-
-type TCategoriesProps = {
-  categories: ICategory[];
+type TBrand = {
+  brands: IBrand[];
 };
-
-const ManageCategory = ({ categories }: TCategoriesProps) => {
-  const [isModalOpen, setModalOpen] = useState(false);
+const ManageBrand = ({ brands }: TBrand) => {
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
-  const handleDelete = (data: ICategory) => {
+
+  const handleDelete = (data: IBrand) => {
     setSelectedId(data?._id);
     setSelectedItem(data?.name);
     setModalOpen(true);
@@ -27,28 +27,29 @@ const ManageCategory = ({ categories }: TCategoriesProps) => {
   const handleDeleteConfirm = async () => {
     try {
       if (selectedId) {
-        const res = await deleteCategory(selectedId);
+        const response = await deleteBrand(selectedId);
 
-        if (res?.success) {
-          toast.success(res.message);
-          setModalOpen(false);
-        } else {
-          toast.error(res.message);
+        if (response?.success) {
+          toast.success(
+            response?.message || "Brand item deleted successfully."
+          );
+        }
+        if (!response?.success) {
+          toast.error(response?.message || "Something went wrong.");
         }
       }
-    } catch (err: any) {
-      console.error(err?.message);
+    } catch (error: any) {
+      console.error(error?.message);
     }
   };
-
-  const columns: ColumnDef<ICategory>[] = [
+  const columns: ColumnDef<IBrand>[] = [
     {
       accessorKey: "name",
-      header: () => <div>Category Name</div>,
+      header: () => <div>Brand Name</div>,
       cell: ({ row }) => (
         <div className="flex items-center space-x-3">
           <Image
-            src={row.original.icon}
+            src={row.original.logo}
             alt={row.original.name}
             width={40}
             height={40}
@@ -93,12 +94,12 @@ const ManageCategory = ({ categories }: TCategoriesProps) => {
   return (
     <div>
       <div className="flex justify-between">
-        <h1 className="text-3xl font-semibold">Manage Category</h1>
-        <CreateCategoryModal />
+        <h1 className="text-3xl font-semibold">Manage Brand</h1>
+        <CreateBrandModal />
       </div>
 
-      <div className="my-4">
-        <TableViewer columns={columns} data={categories} />
+      <div className="mt-4">
+        <TableViewer data={brands} columns={columns} />
       </div>
 
       <DeleteConfirmationModal
@@ -111,4 +112,4 @@ const ManageCategory = ({ categories }: TCategoriesProps) => {
   );
 };
 
-export default ManageCategory;
+export default ManageBrand;

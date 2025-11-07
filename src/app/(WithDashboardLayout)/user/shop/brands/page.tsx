@@ -1,7 +1,14 @@
-import React from "react";
+import ManageBrand from "@/components/modules/shop/brand/ManageBrand";
+import { getAllBrands } from "@/services/Brand";
 
-const ProductsBrandPage = () => {
-  return <div>Products Brand Page</div>;
+const ProductsBrandPage = async () => {
+  const { data, meta } = await getAllBrands();
+
+  return (
+    <div>
+      <ManageBrand brands={data} />
+    </div>
+  );
 };
 
 export default ProductsBrandPage;

@@ -61,7 +61,7 @@ const Navbar = () => {
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         {" "}
-                        <Link href="/user/all=products">Shop</Link>
+                        <Link href="/user/shop/all-products">Shop</Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <Button className="bg-red-600 hover:bg-red-700 my-2">

@@ -16,7 +16,7 @@ export const createCategory = async (data: FormData) => {
       }
     );
 
-    revalidateTag("category");
+    revalidateTag("category", "");
     return response.json();
   } catch (error: any) {
     return new Error(error);
@@ -55,7 +55,7 @@ export const deleteCategory = async (categoryId: string) => {
       }
     );
 
-    revalidateTag("category");
+    revalidateTag("category", "");
     return response.json();
   } catch (error) {
     console.error(error);
