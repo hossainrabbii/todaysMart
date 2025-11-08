@@ -41,13 +41,13 @@ const data = {
     },
     {
       title: "Shop",
-      url: "/user/shop/all-products",
+      url: "/user/shop/products",
       icon: ShoppingBasket,
       isActive: true,
       items: [
         {
           title: "Manage Products",
-          url: "/user/shop/all-products",
+          url: "/user/shop/products",
         },
         {
           title: "Manage Categories",
@@ -68,7 +68,7 @@ const data = {
       items: [
         {
           title: "Manage Products",
-          url: "/user/setting/all-products",
+          url: "/user/setting/products",
         },
         {
           title: "Manage Categories",
