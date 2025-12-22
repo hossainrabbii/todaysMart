@@ -50,6 +50,12 @@ const Navbar = () => {
             <>
               {user ? (
                 <>
+                  <Link href="/cart">
+                    <Button className="cursor-pointer">
+                      <ShoppingBasket />
+                      {products?.length > 0 && <span>{products?.length}</span>}
+                    </Button>
+                  </Link>
                   <Link href="/create-shop">
                     <Button>Create Shop</Button>
                   </Link>

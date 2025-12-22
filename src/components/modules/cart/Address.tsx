@@ -41,7 +41,7 @@ export default function Address() {
         <div className="mt-5">
           <Select onValueChange={(city) => handleCitySelect(city)}>
             <SelectTrigger className="mb-5">
-              <SelectValue placeholder="Select a city" />
+              <SelectValue placeholder={selectedCity || "Select a city"} />
             </SelectTrigger>
             <SelectContent>
               {cities.map((city) => (
@@ -52,6 +52,7 @@ export default function Address() {
             </SelectContent>
           </Select>
           <Textarea
+            value={shippingAddress}
             onChange={(e) => handleShippingAddress(e.target.value)}
             rows={5}
           />
