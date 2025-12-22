@@ -28,7 +28,6 @@ const ManageBrand = ({ brands }: TBrand) => {
     try {
       if (selectedId) {
         const response = await deleteBrand(selectedId);
-
         if (response?.success) {
           toast.success(
             response?.message || "Brand item deleted successfully."
@@ -42,6 +41,8 @@ const ManageBrand = ({ brands }: TBrand) => {
       console.error(error?.message);
     }
   };
+
+
   const columns: ColumnDef<IBrand>[] = [
     {
       accessorKey: "name",
@@ -53,7 +54,7 @@ const ManageBrand = ({ brands }: TBrand) => {
             alt={row.original.name}
             width={40}
             height={40}
-            className="w-8 h-8 rounded-full object-cover"
+            className="w-8 h-8 rounded-sm object-cover"
           />
           <span className="truncate">{row.original.name}</span>
         </div>

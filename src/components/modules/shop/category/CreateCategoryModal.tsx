@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -23,13 +22,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createCategory } from "@/services/Category";
-import { useState } from "react";
+import { ICategory } from "@/types";
+import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export function CreateCategoryModal() {
+export function CreateCategoryModal({
+  openEditModal,
+  setOpenEditModal,
+
+}: {
+  openEditModal: boolean;
+  setOpenEditModal: (value: boolean) => void;
+
+}) {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
+
   // form
   const form = useForm();
 
@@ -54,7 +63,7 @@ export function CreateCategoryModal() {
     }
   };
   return (
-    <Dialog>
+    <Dialog open={openEditModal} onOpenChange={setOpenEditModal}>
       <form>
         <DialogTrigger asChild>
           <Button
@@ -67,7 +76,6 @@ export function CreateCategoryModal() {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Create a new category</DialogTitle>
-
             <hr className="my-2"></hr>
           </DialogHeader>
           <Form {...form}>
@@ -79,24 +87,30 @@ export function CreateCategoryModal() {
                   <FormItem className="">
                     <FormLabel>Category Name</FormLabel>
                     <FormControl>
-                      <Input type="name" {...field} value={field.value || ""} />
+                      <Input
+                        type="name"
+                        {...field}
+                        value={field.value || ""}
+                        required
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="">
                 <FormField
                   name="description"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Description</FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
                           value={field.value || ""}
+                          required
                         ></Textarea>
                       </FormControl>
                     </FormItem>
@@ -119,18 +133,25 @@ export function CreateCategoryModal() {
                 )}
               </div>
 
-              <Button type="submit" className="w-full bg-green-500">
+              <Button
+                type="submit"
+                className="w-full bg-green-500 hover:bg-green-600"
+              >
                 {isSubmitting ? (
                   <span>Submitting...</span>
                 ) : (
-                  <span>Submit</span>
+                  <span className=" ">Submit</span>
                 )}
               </Button>
             </form>
           </Form>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline" className="bg-red-500 text-white">
+              <Button
+                variant="outline"
+                className="bg-red-500 text-white"
+                onClick={() => setOpenEditModal(false)}
+              >
                 Cancel
               </Button>
             </DialogClose>

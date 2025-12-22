@@ -68,8 +68,10 @@ export function NavMain({
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 </>
-              ) : null}
+              ) : null}          
+              
             </SidebarMenuItem>
+            
           </Collapsible>
         ))}
       </SidebarMenu>

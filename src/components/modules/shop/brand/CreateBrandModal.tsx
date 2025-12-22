@@ -65,7 +65,6 @@ export function CreateBrandModal() {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Create a new brand</DialogTitle>
-
             <hr className="my-2"></hr>
           </DialogHeader>
           <Form {...form}>

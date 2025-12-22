@@ -24,7 +24,7 @@ const RegisterForm = () => {
     resolver: zodResolver(registrationSchema),
   });
 
-  console.log(form.formState);
+  // console.log(form.formState);
   const {
     formState: { isSubmitting },
   } = form;

@@ -31,7 +31,6 @@ export function TableViewer<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
   });
 
-
   return (
     <div className="overflow-hidden rounded-sm border">
       <Table>
@@ -39,8 +38,9 @@ export function TableViewer<TData, TValue>({
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
+                // console.log(header);
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.index}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -60,11 +60,17 @@ export function TableViewer<TData, TValue>({
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+                {row.getVisibleCells().map((cell, index) => {
+                  
+                  return (
+                    <TableCell key={index}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             ))
           ) : (

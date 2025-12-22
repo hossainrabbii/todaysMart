@@ -24,10 +24,10 @@ export const createCategory = async (data: FormData) => {
 };
 
 // get all categories
-export const getAllCategories = async () => {
+export const getAllCategories = async (page?: string, limit?: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/category`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/category?limit=${limit}&page=${page}`,
       {
         next: {
           tags: ["category"],

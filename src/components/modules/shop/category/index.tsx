@@ -1,23 +1,28 @@
 "use client";
-import { ICategory } from "@/types";
+import { ICategory, TMeta } from "@/types";
 import { CreateCategoryModal } from "./CreateCategoryModal";
 import { TableViewer } from "@/components/ui/core/Table";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import DeleteConfirmationModal from "@/components/ui/core/Modals/DeleteConfirmationModal";
 import { useState } from "react";
 import { deleteCategory } from "@/services/Category";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import PaginationTable from "@/components/ui/core/Table/PaginationTable";
 
-type TCategoriesProps = {
+type TCategoryMeta = {
   categories: ICategory[];
+  meta: TMeta;
 };
 
-const ManageCategory = ({ categories }: TCategoriesProps) => {
+const ManageCategory = ({ categories, meta }: TCategoryMeta) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+
   const handleDelete = (data: ICategory) => {
     setSelectedId(data?._id);
     setSelectedItem(data?.name);
@@ -52,10 +57,19 @@ const ManageCategory = ({ categories }: TCategoriesProps) => {
             alt={row.original.name}
             width={40}
             height={40}
-            className="w-8 h-8 rounded-full object-cover"
+            className="w-8 h-8 object-cover"
           />
           <span className="truncate">{row.original.name}</span>
         </div>
+      ),
+    },
+    {
+      accessorKey: "name",
+      header: () => <div>Description</div>,
+      cell: ({ row }) => (
+        <span className="truncate" title={row.original.description}>
+          {row.original.description.slice(0, 100)}
+        </span>
       ),
     },
     {
@@ -79,13 +93,24 @@ const ManageCategory = ({ categories }: TCategoriesProps) => {
       accessorKey: "action",
       header: () => <div>Action</div>,
       cell: ({ row }) => (
-        <button
-          className="text-red-500 cursor-pointer"
-          title="Delete"
-          onClick={() => handleDelete(row.original)}
-        >
-          <Trash className="w-5 h-5" />
-        </button>
+        <div className="flex gap-3">
+          <Button
+            variant="outline"
+            className="text-green-600 cursor-pointer"
+            title="Update"
+            onClick={() => setOpenEditModal(true)}
+          >
+            <Edit className="w-5 h-5" />
+          </Button>
+          <Button
+            variant="outline"
+            className="text-red-500 cursor-pointer"
+            title="Delete"
+            onClick={() => handleDelete(row.original)}
+          >
+            <Trash className="w-5 h-5" />
+          </Button>
+        </div>
       ),
     },
   ];
@@ -94,7 +119,12 @@ const ManageCategory = ({ categories }: TCategoriesProps) => {
     <div>
       <div className="flex justify-between">
         <h1 className="text-3xl font-semibold">Manage Category</h1>
-        <CreateCategoryModal />
+        <div className="flex">
+          <CreateCategoryModal
+            openEditModal={openEditModal}
+            setOpenEditModal={setOpenEditModal}
+          />
+        </div>
       </div>
 
       <div className="my-4">
@@ -107,6 +137,7 @@ const ManageCategory = ({ categories }: TCategoriesProps) => {
         onOpenChange={setModalOpen}
         onConfirm={handleDeleteConfirm}
       />
+      <PaginationTable totalPage={meta?.totalPage} />
     </div>
   );
 };

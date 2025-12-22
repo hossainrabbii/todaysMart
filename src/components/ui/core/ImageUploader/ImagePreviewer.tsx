@@ -23,18 +23,23 @@ const ImagePreviewer = ({
   return (
     <div className={cn("", className)}>
       {imagePreview.map((image, index) => (
-        <div className="relative">
-          <Image
-            src={image}
-            width={350}
-            height={350}
-            alt="Image"
-            key={index}
-            className="m-2"
-          />
+        <div className="relative flex items-center gap-4" key={index}>
+          <div className="border h-full rounded flex items-center">
+            <div>
+              <Image
+                src={image}
+                width={160}
+                height={160}
+                alt="Image"
+                key={index}
+                className=""
+              />
+            </div>
+          </div>
+
           <Button
             onClick={() => handleRemoveImage(index)}
-            className="absolute top-0 z-10 ml-2 bg-red-500"
+            className="absolute top-0 z-10 bg-red-500"
           >
             X
           </Button>

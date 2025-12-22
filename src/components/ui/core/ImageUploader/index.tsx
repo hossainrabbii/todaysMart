@@ -41,9 +41,9 @@ const ImageUploader = ({
       />
       <label
         htmlFor="image-uploader"
-        className="w-36 h-36 flex justify-center items-center border-dashed border-2 cursor-pointer rounded-2xl m-4 border-gray-300 hover:bg-gray-200"
+        className="w-28 h-24 flex justify-center items-center border-dashed border-2 cursor-pointer rounded-2xl m-4 border-gray-300 hover:bg-gray-200"
       >
-        {label}
+        <span className="text-[14px] font-semibold">{label}</span>
       </label>
     </div>
   );

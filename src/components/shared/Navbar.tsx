@@ -10,11 +10,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut } from "lucide-react";
+import { LogOut, ShoppingBasket } from "lucide-react";
 import { logOutUser } from "@/services/AuthService";
 import { useUser } from "@/context/UserContext";
 import { usePathname, useRouter } from "next/navigation";
 import { protectedRoutes } from "@/contants";
+import { Input } from "../ui/input";
+import { useAppSelector } from "@/redux/hooks";
+import { cartedProduct } from "@/redux/features/cart/cartSlice";
 const Navbar = () => {
   const { user, setIsLoading, isLoading } = useUser();
   const pathname = usePathname();
@@ -28,14 +31,19 @@ const Navbar = () => {
     }
   };
 
+  // carted product
+  const products = useAppSelector(cartedProduct);
+
   return (
-    <div className="h-[60px] w-full bg-[#E1E1E1]">
+    <div className="h-[60px] w-full bg-[#f0f0f0] sticky top-0 z-999">
       <div className="container mx-auto flex justify-between gap-6 items-center h-full">
-        <div className="w-[35%]"></div>
-        <div className="w-[25%]">
-          <h4 className="text-xl font-semibold text-center ">Todays Mart</h4>
+        <div className="w-[20%]">
+          <Link href="/">Todays Mart</Link>
         </div>
-        <div className="w-[35%] text-right flex gap-2 items-center justify-end">
+        <div className="w-[65%]">
+          <Input className="bg-white py-4" />
+        </div>
+        <div className="w-[25%] text-right flex gap-2 items-center justify-end">
           {isLoading ? (
             <></>
           ) : (
@@ -71,11 +79,17 @@ const Navbar = () => {
                   </DropdownMenu>
                 </>
               ) : (
-                <>
-                  <Link href="/login">
-                    <Button>Login</Button>
+                <div className="flex gap-2">
+                  <Link href="/cart">
+                    <Button className="cursor-pointer">
+                      <ShoppingBasket />
+                      {products?.length > 0 && <span>{products?.length}</span>}
+                    </Button>
                   </Link>
-                </>
+                  <Link href="/login">
+                    <Button className="cursor-pointer">Login</Button>
+                  </Link>
+                </div>
               )}
             </>
           )}

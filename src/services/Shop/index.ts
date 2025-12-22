@@ -3,8 +3,7 @@
 import { cookies } from "next/headers";
 
 export const createShop = async (data: FormData) => {
-
-  console.log('from shop index: ',data)
+  // console.log("from shop index: ", data);
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/shop`, {
       method: "POST",
@@ -19,3 +18,5 @@ export const createShop = async (data: FormData) => {
     return new Error(error);
   }
 };
+
+
