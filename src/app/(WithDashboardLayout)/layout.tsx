@@ -1,3 +1,5 @@
+"use client";
+
 import { AppSidebar } from "@/components/modules/dashboard/sidebar/app-sidebar";
 import {
   SidebarInset,
@@ -10,6 +12,7 @@ export default function DashboardPage({
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <SidebarProvider>
       <AppSidebar />

@@ -4,6 +4,9 @@ import { Provider } from "react-redux";
 // import { makeStore, AppStore } from "../lib/store";
 // import { initializeCount } from "../lib/features/counter/counterSlice";
 import { AppStore, makeStore } from "@/redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+import Loading from "@/components/shared/Loading";
 
 export default function StoreProvider({
   //   count,
@@ -15,8 +18,14 @@ export default function StoreProvider({
   const storeRef = useRef<AppStore | null>(null);
   if (!storeRef.current) {
     storeRef.current = makeStore();
-    // storeRef.current.dispatch(initializeCount(count));
   }
 
-  return <Provider store={storeRef.current}>{children}</Provider>;
+  const persistedStore = persistStore(storeRef.current);
+  return (
+    <Provider store={storeRef.current}>
+      <PersistGate loading={<Loading />} persistor={persistedStore}>
+        {children}
+      </PersistGate>
+    </Provider>
+  );
 }

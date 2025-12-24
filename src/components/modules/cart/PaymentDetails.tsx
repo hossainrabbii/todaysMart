@@ -6,25 +6,15 @@ import { currencyFormatter } from "@/lib/utils";
 import {
   cartedProduct,
   citySelector,
+  clearCart,
   grandTotalSelector,
   orderSelector,
   shippingAddressSelector,
   shippingCostSelector,
   subTotalSelector,
 } from "@/redux/features/cart/cartSlice";
-// import { currencyFormatter } from "@/lib/currencyFormatter";
-// import {
-//   citySelector,
-//   clearCart,
-//   grandTotalSelector,
-//   orderedProductsSelector,
-//   orderSelector,
-//   shippingAddressSelector,
-//   shippingCostSelector,
-//   subTotalSelector,
-// } from "@/redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-// import { createOrder } from "@/services/cart";
+import { createOrder } from "@/services/Cart";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -35,7 +25,6 @@ export default function PaymentDetails() {
   const order = useAppSelector(orderSelector);
   const city = useAppSelector(citySelector);
   const shippingAddress = useAppSelector(shippingAddressSelector);
-  // const cartProducts = useAppSelector(orderedProductsSelector);
   const products = useAppSelector(cartedProduct);
   const user = useUser();
 
@@ -44,6 +33,8 @@ export default function PaymentDetails() {
   const dispatch = useAppDispatch();
 
   const handleOrder = async () => {
+    console.log(order);
+
     const orderLoading = toast.loading("Order is being placed");
     try {
       if (!user.user) {
@@ -62,17 +53,18 @@ export default function PaymentDetails() {
         throw new Error("Cart is empty, what are you trying to order ??");
       }
 
-      // const res = await createOrder(order);
+      const res = await createOrder(order);
+      console.log(res);
+      if (res.success) {
+        toast.success(res?.message, { id: orderLoading });
+        dispatch(clearCart());
+        router.push(res.data.paymentUrl);
+      }
 
-      // if (res.success) {
-      //   toast.success(res.message, { id: orderLoading });
-      //   dispatch(clearCart());
-      //   router.push(res.data.paymentUrl);
-      // }
-
-      // if (!res.success) {
-      //   toast.error(res.message, { id: orderLoading });
-      // }
+      if (!res.success) {
+        console.log(res);
+        toast.error(res.message, { id: orderLoading });
+      }
     } catch (error: any) {
       toast.error(error.message, { id: orderLoading });
     }
