@@ -1,5 +1,5 @@
 "use client";
-import { ICategory, TMeta } from "@/types";
+import { ICategory, IMeta } from "@/types";
 import { CreateCategoryModal } from "./CreateCategoryModal";
 import { TableViewer } from "@/components/ui/core/Table";
 import { ColumnDef } from "@tanstack/react-table";
@@ -14,7 +14,7 @@ import PaginationTable from "@/components/ui/core/Table/PaginationTable";
 
 type TCategoryMeta = {
   categories: ICategory[];
-  meta: TMeta;
+  meta: IMeta;
 };
 
 const ManageCategory = ({ categories, meta }: TCategoryMeta) => {

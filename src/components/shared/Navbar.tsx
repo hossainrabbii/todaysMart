@@ -10,7 +10,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, ShoppingBasket } from "lucide-react";
+import {
+  LogOut,
+  Search,
+  SearchCheckIcon,
+  ShoppingBasket,
+  User2Icon,
+} from "lucide-react";
 import { logOutUser } from "@/services/AuthService";
 import { useUser } from "@/context/UserContext";
 import { usePathname, useRouter } from "next/navigation";
@@ -18,6 +24,8 @@ import { protectedRoutes } from "@/contants";
 import { Input } from "../ui/input";
 import { useAppSelector } from "@/redux/hooks";
 import { cartedProduct } from "@/redux/features/cart/cartSlice";
+import logo from "@/assets/logo.png";
+import Image from "next/image";
 const Navbar = () => {
   const { user, setIsLoading, isLoading } = useUser();
   const pathname = usePathname();
@@ -35,15 +43,22 @@ const Navbar = () => {
   const products = useAppSelector(cartedProduct);
 
   return (
-    <div className="h-[60px] w-full bg-[#f0f0f0] sticky top-0 z-999">
+    <div className="h-[70px] w-full px-2 bg-[#081621] sticky top-0 z-999 ">
       <div className="container mx-auto flex justify-between gap-6 items-center h-full">
-        <div className="w-[20%]">
-          <Link href="/">Todays Mart</Link>
+        <div className="w-auto">
+          <Link href="/">
+            <Image src={logo} width={40} height={40} alt="Logo" />
+          </Link>
         </div>
-        <div className="w-[65%]">
-          <Input className="bg-white py-4" />
+        <div className="w-[65%] hidden lg:block">
+          <div className="flex items-center bg-white rounded">
+            <Input className="bg-white" placeholder="Search" />
+            <div className="bg-white p-1 cursor-pointer">
+              <Search />
+            </div>
+          </div>
         </div>
-        <div className="w-[25%] text-right flex gap-2 items-center justify-end">
+        <div className="w-auto text-right flex gap-2 items-center justify-end">
           {isLoading ? (
             <></>
           ) : (
@@ -51,7 +66,7 @@ const Navbar = () => {
               {user ? (
                 <>
                   <Link href="/cart">
-                    <Button className="cursor-pointer">
+                    <Button className="cursor-pointer bg-[#EF4A23] hover:bg-[#fF4A23]">
                       <ShoppingBasket />
                       {products?.length > 0 && <span>{products?.length}</span>}
                     </Button>
@@ -85,16 +100,34 @@ const Navbar = () => {
                   </DropdownMenu>
                 </>
               ) : (
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-center">
                   <Link href="/cart">
-                    <Button className="cursor-pointer">
+                    <Button className="cursor-pointer bg-[#EF4A23] hover:bg-[#fF4A23]">
                       <ShoppingBasket />
                       {products?.length > 0 && <span>{products?.length}</span>}
                     </Button>
                   </Link>
-                  <Link href="/login">
-                    <Button className="cursor-pointer">Login</Button>
-                  </Link>
+                  <div className="flex flex-start items-center border border-gray-600 px-1 rounded-sm">
+                    <Button className="bg-red">
+                      <User2Icon />
+                    </Button>
+                    <div>
+                      {/* <h3 className="text-white">Account</h3> */}
+                      <Link
+                        href="/register"
+                        className="text-gray-500 hover:text-[#EF4A23] text-[12px]"
+                      >
+                        Register
+                      </Link>{" "}
+                      <span className="text-white">or </span>
+                      <Link
+                        href="/login"
+                        className="text-gray-500 hover:text-[#EF4A23] text-[12px]"
+                      >
+                        Login
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               )}
             </>

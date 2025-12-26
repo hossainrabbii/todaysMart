@@ -23,7 +23,7 @@ const PaginationTable = ({ totalPage }: { totalPage: number }) => {
     router.push(`${pathName}?page=${currentPage + 1}`);
   };
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 my-4">
       <Button
         variant="outline"
         onClick={handlePrev}

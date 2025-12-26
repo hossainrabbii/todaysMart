@@ -9,12 +9,14 @@ interface IInitialStore {
   products: ICartProduct[];
   city: string;
   shippingAddress: string;
+  shopId: string;
 }
 
 const initialState: IInitialStore = {
   products: [],
   city: "",
   shippingAddress: "",
+  shopId: "",
 };
 
 const cartSlice = createSlice({
@@ -22,6 +24,9 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addProduct: (state, action) => {
+      if (state.products.length === 0) {
+        state.shopId = action.payload.shop._id;
+      }
       const productExistToCart = state.products.find(
         (product) => product?._id === action?.payload?._id
       );
@@ -92,6 +97,11 @@ export const orderSelector = (state: RootState) => {
     paymentMethod: "Online",
   };
 };
+
+export const shopSelector = (state: RootState) => {
+  return state.cart.shopId;
+};
+
 export const subTotalSelector = (state: RootState) => {
   return state.cart.products.reduce((acc, product) => {
     if (product?.offerPrice) {

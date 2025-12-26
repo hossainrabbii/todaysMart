@@ -27,8 +27,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { NavMain } from "./nav-main";
-import { NavProjects } from "./nav-projects";
-import { NavSecondary } from "./nav-secondary";
 import { NavUser } from "./nav-user";
 import { useUser } from "@/context/UserContext";
 
@@ -57,6 +55,10 @@ const data = {
           title: "Manage Brands",
           url: "/user/shop/brands",
         },
+        {
+          title: "Manage Coupon",
+          url: "/user/shop/coupon",
+        },
       ],
     },
 
@@ -67,16 +69,12 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "Manage Products",
+          title: "Manage Profile",
           url: "/user/setting/products",
         },
         {
-          title: "Manage Categories",
+          title: "Manage Security",
           url: "/user/setting/categories",
-        },
-        {
-          title: "Manage Brands",
-          url: "/user/setting/brands",
         },
       ],
     },

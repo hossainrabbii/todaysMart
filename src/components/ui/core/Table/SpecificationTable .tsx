@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 
 export const SpecificationTable = ({ specs }: { specs: any }) => {
-  console.log(Object.entries(specs));
+  // console.log(Object.entries(specs));
   return (
     <Table>
       <TableHeader className="bg-gray-100">

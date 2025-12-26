@@ -57,7 +57,7 @@ const LoginForm = () => {
         if (redirect) {
           router.push(redirect);
         } else {
-          router.push("/user/dashboard");
+          router.push("/");
         }
       }
       if (!response?.success) {

@@ -21,7 +21,7 @@ export function ImageTabs({ images }: { images: string[] }) {
                     alt="Image"
                     width={500}
                     height={350}
-                    className="mx-auto"
+                    className="mx-auto w-auto h-auto"
                   />
                 </Link>
               </CardDescription>

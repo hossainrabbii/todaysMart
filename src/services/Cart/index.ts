@@ -18,3 +18,33 @@ export const createOrder = async (order: IOrder) => {
     return new Error(error);
   }
 };
+
+export const addCoupon = async ({
+  shopId,
+  subTotal,
+  couponCode,
+}: {
+  shopId: string;
+  subTotal: number;
+  couponCode: string;
+}) => {
+  try {
+    console.log(shopId, subTotal, couponCode);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/coupon/${couponCode}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        body: JSON.stringify({ orderAmount: subTotal, shopId }),
+      }
+    );
+
+    return await response.json();
+  } catch (error: any) {
+    console.log(error);
+    return Error(error);
+  }
+};

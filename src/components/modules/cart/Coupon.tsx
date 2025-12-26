@@ -6,19 +6,38 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Trash } from "lucide-react";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { toast } from "sonner";
+import { useAppSelector } from "@/redux/hooks";
+import {
+  shopSelector,
+  subTotalSelector,
+} from "@/redux/features/cart/cartSlice";
+import { addCoupon } from "@/services/Cart";
+import { useState } from "react";
 
 export default function Coupon() {
+  const [couponCode, setCouponCode] = useState("");
   const form = useForm();
 
-  const couponInput = form.watch("coupon");
+  const subTotal = useAppSelector(subTotalSelector);
+  const shopId = useAppSelector(shopSelector);
+
+  // const couponInput = form.watch("coupon");
 
   const handleRemoveCoupon = () => {
     form.reset();
   };
-
+  // const couponCode = form.watch("coupon");
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      console.log(data);
+      const couponData = {
+        subTotal,
+        shopId,
+        couponCode: couponCode,
+      };
+
+      const response = await addCoupon(couponData);
+      console.log(response);
+      console.log(couponData);
     } catch (error: any) {
       console.log(error);
       toast.error(error.message);
@@ -45,7 +64,8 @@ export default function Coupon() {
                           {...field}
                           className="rounded-full w-full"
                           placeholder="Promo / Coupon code"
-                          value={field.value}
+                          value={couponCode}
+                          onChange={(e) => setCouponCode(e.target.value)}
                         />
                       </FormControl>
                     </FormItem>
@@ -53,7 +73,7 @@ export default function Coupon() {
                 />
               </div>
               <Button
-                disabled={!couponInput}
+                disabled={!couponCode}
                 onClick={handleRemoveCoupon}
                 variant="outline"
                 className="bg-red-100 rounded-full size-10 w-"
@@ -63,7 +83,7 @@ export default function Coupon() {
             </div>
             <div className="flex gap-3 mt-3">
               <Button
-                disabled={!couponInput}
+                disabled={!couponCode}
                 type="submit"
                 className="w-full text-xl font-semibold py-5 "
               >
