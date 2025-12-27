@@ -1,3 +1,4 @@
+import ProductBanner from "@/components/modules/banner/ProductBanner";
 import { SingleProductCard } from "@/components/modules/products/SingleProductCard";
 import { getSingleProduct } from "@/services/Product";
 
@@ -26,6 +27,7 @@ const SingleProductPage = async ({ params }: Props) => {
 
   return (
     <div className="container mx-auto">
+      <ProductBanner title="Single Product" path="Home - Products" />
       <SingleProductCard product={product} />
     </div>
   );

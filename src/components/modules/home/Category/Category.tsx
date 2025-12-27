@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Category = async () => {
   const { data } = await getAllCategories();
-  console.log(data);
+
   return (
     <div className="my-8">
       <h2 className="text-3xl font-semibold py-2 mb-6">Categories</h2>

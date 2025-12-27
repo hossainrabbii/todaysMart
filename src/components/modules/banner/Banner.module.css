@@ -1,14 +1,6 @@
-.banner {
-  background: url("../../../assets/product-banner.png");
-  height: 250px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
 .homeBanner {
   background: url("../../../assets/12.12-web-banner-982x500.webp");
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }

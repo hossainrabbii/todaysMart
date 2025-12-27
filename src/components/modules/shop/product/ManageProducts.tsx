@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import DeleteConfirmationModal from "@/components/ui/core/Modals/DeleteConfirmationModal";
 import { TableViewer } from "@/components/ui/core/Table";
 import { deleteSingleProduct } from "@/services/Product";
-import { IProductType, TMeta } from "@/types";
+import { IMeta, IProductType } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Trash } from "lucide-react";
 import Image from "next/image";
@@ -19,7 +19,7 @@ const ManageProducts = ({
   meta,
 }: {
   products: IProductType[];
-  meta: TMeta;
+  meta: IMeta;
 }) => {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);

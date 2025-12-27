@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  getCurrentUser,
   loginUser,
   logOutUser,
   reCaptchaVarification,
@@ -23,6 +24,8 @@ import Link from "next/link";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks";
+import { addUser } from "@/redux/features/user/userSlice";
 
 const LoginForm = () => {
   const [reCaptchaStatus, setRecaptchaStatus] = useState(false);
@@ -47,12 +50,18 @@ const LoginForm = () => {
       setRecaptchaStatus(true);
     }
   };
+
+  const dispatch = useAppDispatch();
   // onsubmit func
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const response = await loginUser(data);
+
+      const user = await getCurrentUser();
+
       if (response?.success) {
         toast.success(response?.message || "Login Successful.");
+        dispatch(addUser(user));
         form.reset();
         if (redirect) {
           router.push(redirect);
@@ -70,8 +79,7 @@ const LoginForm = () => {
   };
   return (
     <div className="bg-white p-4 rounded">
-      <h3 className="text-xl font-semibold mb-8">Login now</h3>
-
+      <h3 className="text-xl font-semibold mb-12">Account Login </h3>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -115,12 +123,20 @@ const LoginForm = () => {
             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY as string}
             onChange={handleReCaptcha}
           />
-          <Button type="submit" disabled={!reCaptchaStatus}>
+          <Button type="submit" disabled={!reCaptchaStatus} className="w-full">
             {isSubmitting ? <span>Login...</span> : <span>Login</span>}
           </Button>
         </form>
       </Form>
-      <Link href="/register">Register</Link>
+      <p className="text-center mt-8">Don't have an account?</p>{" "}
+      <Link href="/register">
+        <Button
+          variant="outline"
+          className="w-full cursor-pointer border-purple-300"
+        >
+          Register
+        </Button>
+      </Link>
     </div>
   );
 };

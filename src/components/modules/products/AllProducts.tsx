@@ -35,8 +35,8 @@ export const AllProducts = ({
   );
 
   return (
-    <div className="flex gap-4 items-start my-8">
-      <div className="max-w-[300px]">
+    <div className="flex flex-col md:flex-row gap-4 items-start my-8">
+      <div className="w-ful md:max-w-[240px] lg:max-w-[300px]">
         <SidebarFilter
           price={price}
           setPrice={setPrice}
@@ -49,7 +49,11 @@ export const AllProducts = ({
           prodCat={categor}
         />
       </div>
-      <ProductCard products={filteredProducts} itemCount={i} />
+      <ProductCard
+        products={filteredProducts}
+        itemCount={i}
+        classCSS="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4"
+      />
     </div>
   );
 };

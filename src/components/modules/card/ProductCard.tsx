@@ -10,9 +10,14 @@ import { toast } from "sonner";
 type SingleProductCardItemProps = {
   products: IProductType[]; // adjust type
   itemCount: any;
+  classCSS: string;
 };
 
-const ProductCard = ({ products, itemCount }: SingleProductCardItemProps) =>
+const ProductCard = ({
+  products,
+  itemCount,
+  classCSS,
+}: SingleProductCardItemProps) =>
   // { products }: { products: any },
   // { itemCount }: { itemCount: any }
   // console.log(products);
@@ -25,7 +30,7 @@ const ProductCard = ({ products, itemCount }: SingleProductCardItemProps) =>
       toast.success("The product is added to cart.");
     };
     return (
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className={`${classCSS}`}>
         {products.slice(0, itemCount.itemCount).map((prod: IProductType) => (
           <div
             className="border shadow-md p-4 rounded-md my-2 bg-white flex flex-col justify-between"

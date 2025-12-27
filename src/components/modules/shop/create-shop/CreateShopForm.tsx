@@ -59,7 +59,7 @@ const CreateShopForm = () => {
     }
   };
   return (
-    <div className="">
+    <div className="my-8 bg-white p-4 rounded-md">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

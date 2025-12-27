@@ -22,17 +22,20 @@ import { useUser } from "@/context/UserContext";
 import { usePathname, useRouter } from "next/navigation";
 import { protectedRoutes } from "@/contants";
 import { Input } from "../ui/input";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { cartedProduct } from "@/redux/features/cart/cartSlice";
 import logo from "@/assets/logo.png";
 import Image from "next/image";
+import { removeUser, userInfoFromSlice } from "@/redux/features/user/userSlice";
 const Navbar = () => {
   const { user, setIsLoading, isLoading } = useUser();
   const pathname = usePathname();
   const router = useRouter();
+  const dispath = useAppDispatch();
   const handleLogOut = () => {
     logOutUser();
     setIsLoading(true);
+    dispath(removeUser());
 
     if (protectedRoutes.some((route) => pathname.match(route))) {
       router.push("/");
@@ -41,7 +44,8 @@ const Navbar = () => {
 
   // carted product
   const products = useAppSelector(cartedProduct);
-
+  const userId = useAppSelector(userInfoFromSlice);
+  console.log(userId);
   return (
     <div className="h-[70px] w-full px-2 bg-[#081621] sticky top-0 z-999 ">
       <div className="container mx-auto flex justify-between gap-6 items-center h-full">
@@ -63,8 +67,8 @@ const Navbar = () => {
             <></>
           ) : (
             <>
-              {user ? (
-                <>
+              {userId ? (
+                <div className="flex items-center gap-2">
                   <Link href="/cart">
                     <Button className="cursor-pointer bg-[#EF4A23] hover:bg-[#fF4A23]">
                       <ShoppingBasket />
@@ -72,8 +76,9 @@ const Navbar = () => {
                     </Button>
                   </Link>
                   <Link href="/create-shop">
-                    <Button>Create Shop</Button>
+                    <Button variant="outline">Create Shop</Button>
                   </Link>
+
                   <DropdownMenu>
                     <DropdownMenuTrigger>
                       <Avatar>
@@ -98,7 +103,7 @@ const Navbar = () => {
                       </Button>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                </>
+                </div>
               ) : (
                 <div className="flex gap-2 items-center">
                   <Link href="/cart">

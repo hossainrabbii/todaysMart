@@ -17,7 +17,11 @@ const FeaturedProducts = async () => {
           </Button>
         </Link>
       </div>
-      <SingleProductCardItem products={products} itemCount={0} />
+      <SingleProductCardItem
+        products={products}
+        itemCount={0}
+        classCSS="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl-grid-cols-5 gap-4"
+      />
     </div>
   );
 };

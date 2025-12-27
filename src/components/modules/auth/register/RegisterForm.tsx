@@ -14,15 +14,22 @@ import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registrationSchema } from "./registerValidation";
-import { registerUser } from "@/services/AuthService";
+import { getCurrentUser, registerUser } from "@/services/AuthService";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks";
+import { addUser } from "@/redux/features/user/userSlice";
 
 const RegisterForm = () => {
   // form
   const form = useForm({
     resolver: zodResolver(registrationSchema),
   });
+
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirectPath");
+  const router = useRouter();
 
   // console.log(form.formState);
   const {
@@ -31,13 +38,22 @@ const RegisterForm = () => {
   const password = form.watch("password");
   const confirmPassword = form.watch("confirmPassword");
 
+  const dispatch = useAppDispatch();
   // onsubmit func
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const response = await registerUser(data);
+      console.log(response);
       if (response?.success) {
         toast.success(response?.message || "Registration Successful.");
+        const user = await getCurrentUser();
+        dispatch(addUser(user));
         form.reset();
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/");
+        }
       }
       if (!response?.success) {
         toast.warning(response?.message || "Something went wrong");
@@ -47,8 +63,8 @@ const RegisterForm = () => {
     }
   };
   return (
-    <div className="bg-white p-4 rounded">
-      <h3 className="text-xl font-semibold">Register now</h3>
+    <div className="bg-[#fff] p-4 rounded">
+      <h3 className="text-xl font-semibold mb-12">Register Account</h3>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -128,6 +144,7 @@ const RegisterForm = () => {
             )}
           />
           <Button
+            className="w-full"
             type="submit"
             disabled={confirmPassword !== password && !!confirmPassword}
           >
@@ -135,7 +152,15 @@ const RegisterForm = () => {
           </Button>
         </form>
       </Form>
-      <Link href="/login">Login</Link>
+      <p className="text-center mt-8">Already have an account?</p>
+      <Link href="/login">
+        <Button
+          variant="outline"
+          className="w-full cursor-pointer border-purple-300"
+        >
+          Login
+        </Button>
+      </Link>
     </div>
   );
 };
