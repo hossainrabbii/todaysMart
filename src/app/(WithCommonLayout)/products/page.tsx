@@ -10,6 +10,9 @@ export const metadata: Metadata = {
 const AllProductsPage = async () => {
   const { data: products, meta } = await getAllProducts();
   const { data: categories } = await getAllCategories();
+
+  console.log(products);
+  console.log(categories);
   return (
     <div className="container mx-auto">
       <ProductBanner title="All Products" path="Home - Products" />
