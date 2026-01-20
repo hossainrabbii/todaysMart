@@ -53,6 +53,7 @@ export function CreateCategoryModal({
       formData.append("icon", imageFiles[0] as File);
 
       const response = await createCategory(formData);
+      
       if (response?.success) {
         toast.success(response.message || "Category created successfully.");
       } else {
