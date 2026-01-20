@@ -73,7 +73,6 @@ const LoginForm = () => {
         toast.warning(response?.message || "Something went wrong");
       }
     } catch (error) {
-      // console.log(error);
       toast.error("Login failed");
     }
   };
@@ -118,7 +117,6 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-
           <ReCAPTCHA
             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY as string}
             onChange={handleReCaptcha}
@@ -126,6 +124,9 @@ const LoginForm = () => {
           <Button type="submit" disabled={!reCaptchaStatus} className="w-full">
             {isSubmitting ? <span>Login...</span> : <span>Login</span>}
           </Button>
+          {/* <Button type="submit" className="w-full">
+            {isSubmitting ? <span>Login...</span> : <span>Login</span>}
+          </Button> */}
         </form>
       </Form>
       <p className="text-center mt-8">Don't have an account?</p>{" "}

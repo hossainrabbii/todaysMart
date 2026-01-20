@@ -6,7 +6,10 @@ const Category = async () => {
 
   return (
     <div className="my-8">
-      <h2 className="text-3xl font-semibold py-2 mb-6">Categories</h2>
+      <h2 className="text-3xl font-semibold py-2">Categories</h2>
+      <p className="mb-6 font-semibold">
+        Browse our wide selection of products
+      </p>
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
         {data.map((cat: any) => (
           <div

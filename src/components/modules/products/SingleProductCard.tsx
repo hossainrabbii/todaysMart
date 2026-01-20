@@ -37,28 +37,13 @@ export const SingleProductCard = ({ product }: { product: any }) => {
   // console.log(product?.data);
   return (
     <div className="my-8">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4 bg-white rounded-lg p-8 mb-12">
         <ImageTabs images={imageUrls} />
-        {/* <Carousel className="w-full max-w-xs">
-          <CarouselContent>
-            {imageUrls?.slice(0, 3).map((img: string, index: number) => (
-              <CarouselItem key={index}>
-                <div className="p-1">
-                  <Card>
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <img src={img} alt="Product" />
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel> */}
 
-        <div className="">
-          <h4 className="text-purple-800 font-semibold mb-2 text-2xl">{name}</h4>
+        <div className="mt-6">
+          <h4 className="text-purple-800 font-semibold mb-2 text-2xl">
+            {name}
+          </h4>
 
           {stock > 0 ? (
             <div className="flex items-center gap-1 text-sm mb-2">

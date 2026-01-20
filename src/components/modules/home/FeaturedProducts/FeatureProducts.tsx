@@ -10,7 +10,12 @@ const FeaturedProducts = async () => {
   return (
     <div className="container mx-auto py-5">
       <div className="flex justify-between mb-6">
-        <div className="text-3xl font-semibold">Featured Products</div>
+        <div className=" font-semibold">
+          <h3 className="text-3xl">Featured Products</h3>
+
+          <p> Handpicked deals just for you</p>
+        </div>
+        {/* <p>Handpicked deals just for you</p> */}
         <Link href="/products">
           <Button variant="outline" className="rounded-full">
             All Collection
@@ -20,7 +25,7 @@ const FeaturedProducts = async () => {
       <SingleProductCardItem
         products={products}
         itemCount={0}
-        classCSS="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl-grid-cols-5 gap-4"
+        classCSS="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl-grid-cols-5 gap-4"
       />
     </div>
   );

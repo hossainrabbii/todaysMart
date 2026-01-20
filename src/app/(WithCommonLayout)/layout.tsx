@@ -1,5 +1,7 @@
+import { TrustSection } from "@/components/shared/TrustSection";
 import Footer from "../../components/shared/Footer";
 import Navbar from "../../components/shared/Navbar";
+import { Newsletter } from "@/components/shared/Newsletter";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -8,6 +10,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <main className="container mx-auto min-h-screen w-full lg:w-[75%] px-2">
         {children}
       </main>
+      <TrustSection />
+      <Newsletter />
       <Footer />
     </div>
   );

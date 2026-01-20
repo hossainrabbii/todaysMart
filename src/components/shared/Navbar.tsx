@@ -27,6 +27,7 @@ import { cartedProduct } from "@/redux/features/cart/cartSlice";
 import logo from "@/assets/logo.png";
 import Image from "next/image";
 import { removeUser, userInfoFromSlice } from "@/redux/features/user/userSlice";
+import { useState } from "react";
 const Navbar = () => {
   const { user, setIsLoading, isLoading } = useUser();
   const pathname = usePathname();
@@ -42,10 +43,17 @@ const Navbar = () => {
     }
   };
 
+  // console.log('user',user);
+  // if(){
+  //   console.log("Daka")
+  // }
+
   // carted product
   const products = useAppSelector(cartedProduct);
   const userId = useAppSelector(userInfoFromSlice);
-  console.log(userId);
+  // const user = useUser();
+  console.log("user id:", userId);
+  const [searchFocused, setSearchFocused] = useState(false);
   return (
     <div className="h-[70px] w-full px-2 bg-[#081621] sticky top-0 z-999 ">
       <div className="container mx-auto flex justify-between gap-6 items-center h-full">
@@ -55,10 +63,24 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="w-[65%] hidden lg:block">
-          <div className="flex items-center bg-white rounded">
+          {/* <div className="flex items-center bg-white rounded">
             <Input className="bg-white" placeholder="Search" />
             <div className="bg-white p-1 cursor-pointer">
               <Search />
+            </div>
+          </div> */}
+          <div
+            className={`hidden md:flex flex-1 max-w-4xl transition-all duration-300 ${searchFocused ? "scale-[1.02]" : ""}`}
+          >
+            <div className="relative w-full group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-accent transition-colors" />
+              <Input
+                type="search"
+                placeholder="Search products, brands, categories..."
+                className="w-full pl-11 pr-4 h-11 rounded-xl border-2 border-border bg-transparent focus:border-accent focus:bg-background focus:ring-2 focus:ring-accent/20 transition-all"
+                onFocus={() => setSearchFocused(true)}
+                onBlur={() => setSearchFocused(false)}
+              />
             </div>
           </div>
         </div>
@@ -67,7 +89,37 @@ const Navbar = () => {
             <></>
           ) : (
             <>
-              {userId ? (
+              {user === null ? (
+                <div className="flex gap-2 items-center">
+                  <Link href="/cart">
+                    <Button className="cursor-pointer bg-[#EF4A23] hover:bg-[#fF4A23]">
+                      <ShoppingBasket />
+                      {products?.length > 0 && <span>{products?.length}</span>}
+                    </Button>
+                  </Link>
+                  <div className="flex flex-start items-center border border-gray-600 px-1 rounded-sm">
+                    <Button className="bg-red">
+                      <User2Icon />
+                    </Button>
+                    <div>
+                      {/* <h3 className="text-white">Account</h3> */}
+                      <Link
+                        href="/register"
+                        className="text-gray-500 hover:text-[#EF4A23] text-[12px]"
+                      >
+                        Register
+                      </Link>{" "}
+                      <span className="text-white">or </span>
+                      <Link
+                        href="/login"
+                        className="text-gray-500 hover:text-[#EF4A23] text-[12px]"
+                      >
+                        Login
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ) : (
                 <div className="flex items-center gap-2">
                   <Link href="/cart">
                     <Button className="cursor-pointer bg-[#EF4A23] hover:bg-[#fF4A23]">
@@ -103,36 +155,6 @@ const Navbar = () => {
                       </Button>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                </div>
-              ) : (
-                <div className="flex gap-2 items-center">
-                  <Link href="/cart">
-                    <Button className="cursor-pointer bg-[#EF4A23] hover:bg-[#fF4A23]">
-                      <ShoppingBasket />
-                      {products?.length > 0 && <span>{products?.length}</span>}
-                    </Button>
-                  </Link>
-                  <div className="flex flex-start items-center border border-gray-600 px-1 rounded-sm">
-                    <Button className="bg-red">
-                      <User2Icon />
-                    </Button>
-                    <div>
-                      {/* <h3 className="text-white">Account</h3> */}
-                      <Link
-                        href="/register"
-                        className="text-gray-500 hover:text-[#EF4A23] text-[12px]"
-                      >
-                        Register
-                      </Link>{" "}
-                      <span className="text-white">or </span>
-                      <Link
-                        href="/login"
-                        className="text-gray-500 hover:text-[#EF4A23] text-[12px]"
-                      >
-                        Login
-                      </Link>
-                    </div>
-                  </div>
                 </div>
               )}
             </>
