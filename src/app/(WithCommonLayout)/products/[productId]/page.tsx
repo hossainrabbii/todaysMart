@@ -24,7 +24,7 @@ export async function generateMetadata(
 const SingleProductPage = async ({ params }: Props) => {
   const { productId } = await params;
   const product = await getSingleProduct(productId);
-  console.log(product);
+
   return (
     <div className="container mx-auto">
       <ProductBanner title="Single Product" path="Home - Products" />

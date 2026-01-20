@@ -13,6 +13,10 @@ import { IProductType } from "@/types";
 import { useState } from "react";
 import { ProductTabs } from "./tab/ProductTabs";
 import { ImageTabs } from "./tab/ImageTabs";
+import { addProduct } from "@/redux/features/cart/cartSlice";
+import { toast } from "sonner";
+import { useAppDispatch } from "@/redux/hooks";
+import { ShoppingCart } from "lucide-react";
 
 // import Autoplay from "embla-carousel-autoplay";
 
@@ -33,8 +37,14 @@ export const SingleProductCard = ({ product }: { product: any }) => {
     weight,
     specification,
   } = product?.data;
+  const dispatch = useAppDispatch();
 
-  // console.log(product?.data);
+  const handleAddProductToCart = (product: any) => {
+    console.log(product);
+    dispatch(addProduct(product));
+    toast.success("The product is added to cart.");
+  };
+
   return (
     <div className="my-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4 bg-white rounded-lg p-8 mb-12">
@@ -80,6 +90,19 @@ export const SingleProductCard = ({ product }: { product: any }) => {
               {c}
             </Button>
           ))}
+
+          <div>
+            <Button
+              variant="outline"
+              className="rounded-md bg-orange-500 text-white hover:bg-orange-600 hover:text-white mt-2"
+              onClick={() => {
+                handleAddProductToCart(product?.data);
+              }}
+            >
+              <ShoppingCart />
+              Add to Cart
+            </Button>
+          </div>
         </div>
       </div>
       <ProductTabs specification={specification} description={description} />

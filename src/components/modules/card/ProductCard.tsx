@@ -20,11 +20,12 @@ const ProductCard = ({
 }: SingleProductCardItemProps) => {
   const dispatch = useAppDispatch();
   const handleAddProductToCart = (product: any) => {
+    console.log(product);
     dispatch(addProduct(product));
     toast.success("The product is added to cart.");
   };
 
-  console.log(products);
+  // console.log(products);
   return (
     <>
       {/*  */}
@@ -47,11 +48,11 @@ const ProductCard = ({
             </div>
             <div className="flex items-center gap-2 text-xs">
               <span className="text-orange-500 font-medium">
-                {prod.brand.name}
+                {prod?.brand?.name}
               </span>
               <span className="text-muted-foreground">•</span>
               <span className="text-muted-foreground">
-                {prod.category.name}
+                {prod?.category?.name}
               </span>
             </div>
             <strong className="my-2 block hover:text-orange-600">
@@ -84,7 +85,6 @@ const ProductCard = ({
               variant="outline"
               className="rounded-md bg-orange-500 text-white hover:bg-orange-600 hover:text-white mt-2"
               onClick={() => {
-                console.log(prod);
                 handleAddProductToCart(prod);
               }}
             >

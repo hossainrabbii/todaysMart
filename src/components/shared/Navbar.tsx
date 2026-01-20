@@ -51,18 +51,24 @@ const Navbar = () => {
   // carted product
   const products = useAppSelector(cartedProduct);
   const userId = useAppSelector(userInfoFromSlice);
-  // const user = useUser();
-  console.log("user id:", userId);
   const [searchFocused, setSearchFocused] = useState(false);
   return (
     <div className="h-[70px] w-full px-2 bg-[#081621] sticky top-0 z-999 ">
       <div className="container mx-auto flex justify-between gap-6 items-center h-full">
         <div className="w-auto">
-          <Link href="/">
+          {/* <Link href="/">
             <Image src={logo} width={40} height={40} alt="Logo" />
+          </Link> */}
+          <Link href="/" className="flex items-center gap-2 shrink-0">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-400 text-accent-foreground font-black text-xl shadow-md">
+              T
+            </div>
+            <span className="hidden sm:block text-xl font-bold text-white">
+              Todays<span className="text-accent">Mart</span>
+            </span>
           </Link>
         </div>
-        <div className="w-[65%] hidden lg:block">
+        <div className="w-[55%] hidden lg:block">
           {/* <div className="flex items-center bg-white rounded">
             <Input className="bg-white" placeholder="Search" />
             <div className="bg-white p-1 cursor-pointer">
