@@ -53,6 +53,18 @@ export const getSingleProduct = async (productId: string) => {
   }
 };
 
+// get single product
+export const getSingleProductSlug = async (slug: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/product/${slug}`
+    );
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // delete single product
 export const deleteSingleProduct = async (productId: string) => {
   // console.log(productId);

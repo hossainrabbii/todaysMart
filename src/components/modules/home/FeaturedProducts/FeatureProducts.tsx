@@ -5,7 +5,7 @@ import SingleProductCardItem from "../../card/ProductCard";
 
 const FeaturedProducts = async () => {
   const { data: products, meta } = await getAllProducts();
-
+  console.log(products);
   const items = 8;
   return (
     <div className="container mx-auto py-5">

@@ -33,10 +33,10 @@ const ProductCard = ({
         {products.slice(0, itemCount.itemCount).map((prod: IProductType) => (
           <div
             className="border shadow-md p-4 rounded-md my-2 bg-white flex flex-col justify-between"
-            key={prod?._id}
+            key={prod?.slug}
           >
             <div className="py-8">
-              <Link href={`/products/${prod?._id}`}>
+              <Link href={`/products/${prod?.slug}`}>
                 <Image
                   src={prod?.imageUrls[0]}
                   alt={prod?.name}
@@ -53,10 +53,12 @@ const ProductCard = ({
               <span className="text-muted-foreground">•</span>
               <span className="text-muted-foreground">
                 {prod?.category?.name}
+                <Link href={`/products/${prod?.slug}`}>Slug</Link>
               </span>
             </div>
+
             <strong className="my-2 block hover:text-orange-600">
-              <Link href={`/products/${prod?._id}`}>
+              <Link href={`/products/${prod?.slug}`}>
                 <p className="text-[12px] md:text-[14px]">{prod?.name}</p>
                 {/* <p>{prod?.category?.name}</p> */}
               </Link>
