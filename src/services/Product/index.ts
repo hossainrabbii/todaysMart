@@ -14,7 +14,7 @@ export const createProduct = async (data: FormData) => {
           Authorization: (await cookies()).get("accessToken")!.value,
         },
         body: data,
-      }
+      },
     );
 
     return response.json();
@@ -32,7 +32,7 @@ export const getAllProducts = async (page?: string, limit?: string) => {
         next: {
           tags: ["product"],
         },
-      }
+      },
     );
 
     return response.json();
@@ -45,7 +45,7 @@ export const getAllProducts = async (page?: string, limit?: string) => {
 export const getSingleProduct = async (productId: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/product/${productId}`
+      `${process.env.NEXT_PUBLIC_BASE_API}/product/${productId}`,
     );
     return response.json();
   } catch (error) {
@@ -57,7 +57,10 @@ export const getSingleProduct = async (productId: string) => {
 export const getSingleProductSlug = async (slug: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/product/${slug}`
+      `${process.env.NEXT_PUBLIC_BASE_API}/product/${slug}`,
+      {
+        next: { revalidate: 60 },
+      },
     );
     return response.json();
   } catch (error) {
@@ -74,7 +77,7 @@ export const deleteSingleProduct = async (productId: string) => {
       {
         method: "DELETE",
         headers: { Authorization: (await cookies()).get("accessToken")!.value },
-      }
+      },
     );
     revalidateTag("product", "");
     return response.json();

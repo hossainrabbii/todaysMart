@@ -2,6 +2,7 @@ import { TrustSection } from "@/components/shared/TrustSection";
 import Footer from "../../components/shared/Footer";
 import Navbar from "../../components/shared/Navbar";
 import { Newsletter } from "@/components/shared/Newsletter";
+import { UnderDevelopmentModal } from "@/components/UnderDevelopmentModal";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -13,6 +14,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <TrustSection />
       <Newsletter />
       <Footer />
+
+      <UnderDevelopmentModal />
     </div>
   );
 };
