@@ -17,7 +17,7 @@ import { addProduct } from "@/redux/features/cart/cartSlice";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/redux/hooks";
 import { ShoppingCart } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 // import Autoplay from "embla-carousel-autoplay";
 
 export const SingleProductCard = ({ product }: { product: any }) => {
@@ -35,14 +35,21 @@ export const SingleProductCard = ({ product }: { product: any }) => {
     slug,
     stock,
     weight,
+    offerPrice,
     specification,
   } = product?.data;
   const dispatch = useAppDispatch();
-
+  const router = useRouter();
   const handleAddProductToCart = (product: any) => {
     console.log(product);
     dispatch(addProduct(product));
     toast.success("The product is added to cart.");
+  };
+  const handleAddProductToCartBuyNow = (product: any) => {
+    console.log(product);
+    dispatch(addProduct(product));
+    toast.success("The product is added to cart.");
+    router.push("/cart");
   };
 
   return (
@@ -68,7 +75,11 @@ export const SingleProductCard = ({ product }: { product: any }) => {
           )}
 
           <h5 className="bg-gray-100 p-1 rounded-lg my-2 inline">
-            Price: {price}৳
+            {offerPrice == null ? (
+              <>Price: ৳{price}</>
+            ) : (
+              <>Price: ৳{offerPrice}</>
+            )}
           </h5>
           <h6 className="font-semibold mt-2">Key Features</h6>
           {keyFeatures.map((kf: string, i: number) => (
@@ -91,7 +102,16 @@ export const SingleProductCard = ({ product }: { product: any }) => {
             </Button>
           ))}
 
-          <div>
+          <div className="flex gap-6">
+            <Button
+              variant="outline"
+              className="rounded-md bg-orange-500 text-white hover:bg-orange-600 hover:text-white mt-2"
+              onClick={() => {
+                handleAddProductToCartBuyNow(product?.data);
+              }}
+            >
+              Buy Now
+            </Button>
             <Button
               variant="outline"
               className="rounded-md bg-orange-500 text-white hover:bg-orange-600 hover:text-white mt-2"

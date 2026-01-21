@@ -62,22 +62,22 @@ const data = {
       ],
     },
 
-    {
-      title: "Setting",
-      url: "/user/setting/all-products",
-      icon: Settings,
-      isActive: true,
-      items: [
-        {
-          title: "Manage Profile",
-          url: "/user/setting/products",
-        },
-        {
-          title: "Manage Security",
-          url: "/user/setting/categories",
-        },
-      ],
-    },
+    // {
+    //   title: "Setting",
+    //   url: "/user/setting/all-products",
+    //   icon: Settings,
+    //   isActive: true,
+    //   items: [
+    //     {
+    //       title: "Manage Profile",
+    //       url: "/user/setting/products",
+    //     },
+    //     {
+    //       title: "Manage Security",
+    //       url: "/user/setting/categories",
+    //     },
+    //   ],
+    // },
   ],
   navSecondary: [
     {

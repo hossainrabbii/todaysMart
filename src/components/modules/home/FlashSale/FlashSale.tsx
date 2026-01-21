@@ -21,12 +21,11 @@ const FlashSale = async () => {
         <div className="w-[320px]">
           <FlashSaleCountdown />
         </div>
-
-        <div>
+        <div className="w-full">
           <ProductCard
             products={products}
             itemCount={0}
-            classCSS="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl-grid-cols-3 gap-4"
+            classCSS="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl-grid-cols-3 gap-4"
           />
         </div>
       </div>

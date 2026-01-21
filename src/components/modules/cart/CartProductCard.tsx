@@ -36,7 +36,7 @@ export default function CartProductCard({
   return (
     <div className="bg-white rounded-lg flex p-2 lg:p-5 gap-2 lg:gap-5 shadow-md shadow-b">
       <div className="h-full rounded-md overflow-hidden">
-        <Link href={`/products/${product?._id}`}>
+        <Link href={`/products/${product?.slug}`}>
           <Image
             src={product?.imageUrls?.[0]}
             height={140}
@@ -47,7 +47,7 @@ export default function CartProductCard({
         </Link>
       </div>
       <div className="flex flex-col justify-between flex-grow">
-        <Link href={`/products/${product?._id}`}>
+        <Link href={`/products/${product?.slug}`}>
           <h1 className="text-xs md:text-sm lg:text-lg font-semibold hover:text-purple-500">
             {product?.name}
           </h1>

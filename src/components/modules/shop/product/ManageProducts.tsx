@@ -105,7 +105,7 @@ const ManageProducts = ({
             height={40}
             className="w-8 h-8 rounded-sm object-cover"
           />
-          <Link href={`../../products/${row?.original?._id}`}>
+          <Link href={`../../products/${row?.original?.slug}`}>
             {" "}
             <span
               className="truncate hover:font-bold"

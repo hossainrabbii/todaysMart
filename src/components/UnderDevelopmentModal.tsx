@@ -47,7 +47,7 @@ export const UnderDevelopmentModal = () => {
         </button>
 
         {/* Header */}
-        <h2 className="text-3xl font-bold text-orange-500 dark:text-gray-100 mb-4">
+        <h2 className="text-xl md:text-3xl font-bold text-orange-500 dark:text-gray-100 mb-4">
           🚧 Under Development
         </h2>
 

@@ -25,7 +25,6 @@ const ProductCard = ({
     toast.success("The product is added to cart.");
   };
 
-  // console.log(products);
   return (
     <>
       {/*  */}
@@ -53,14 +52,14 @@ const ProductCard = ({
               <span className="text-muted-foreground">•</span>
               <span className="text-muted-foreground">
                 {prod?.category?.name}
-                <Link href={`/products/${prod?.slug}`}>Slug</Link>
+                {/* <Link href={`/products/${prod?.slug}`}>Slug</Link> */}
               </span>
             </div>
 
             <strong className="my-2 block hover:text-orange-600">
               <Link href={`/products/${prod?.slug}`}>
                 <p className="text-[12px] md:text-[14px]">{prod?.name}</p>
-                {/* <p>{prod?.category?.name}</p> */}
+              
               </Link>
             </strong>
             <p>
