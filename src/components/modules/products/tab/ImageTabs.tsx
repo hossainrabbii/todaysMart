@@ -29,7 +29,7 @@ export function ImageTabs({ images }: { images: string[] }) {
           </Card>
         </TabsContent>
 
-        <TabsList className="bg-gray-200 mt-2 w-full h-[150px] gap-2">
+        <TabsList className="bg-gray-200 mt-2 w-full h-[70px] md:h-[150px] gap-2">
           {images.map((i) => (
             <TabsTrigger
               value={i}
@@ -39,7 +39,7 @@ export function ImageTabs({ images }: { images: string[] }) {
               <Image
                 src={i}
                 alt="Image"
-                width={130}
+                width={50}
                 height={30}
                 className="rounded-sm"
               />

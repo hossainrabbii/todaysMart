@@ -9,23 +9,15 @@ const FlashSale = async () => {
 
   return (
     <div className="my-12 rounded-2xl">
-      {/* <div className="flex items-center justify-between mb-6">
-        <h2 className="text-3xl font-semibold">Flash Sale</h2>
-        <Link href="./products">
-          <Button variant="outline" className="rounded-full">
-            All Collection
-          </Button>
-        </Link>
-      </div> */}
-      <div className="flex flex-col md:flex-row gap-4 items-center">
-        <div className="w-[320px]">
+      <div className=" md:flex-col gap-4 items-center">
+        <div className="w-full"></div>
+        <div className="w-full bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 p-2 md:p-6 rounded-2xl shadow-lg items-center justify-center mx-auto w-full">
           <FlashSaleCountdown />
-        </div>
-        <div className="w-full">
+
           <ProductCard
             products={products}
-            itemCount={0}
-            classCSS="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl-grid-cols-3 gap-4"
+            itemCount={4}
+            classCSS="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl-grid-cols-4 gap-4"
           />
         </div>
       </div>

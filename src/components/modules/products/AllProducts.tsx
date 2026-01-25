@@ -11,27 +11,16 @@ export const AllProducts = ({
   products: any;
   categor: any;
 }) => {
-  // const { data: products, meta } = await getAllProducts();
-  console.log(products);
-  const i = 0;
   const [price, setPrice] = useState<number[]>([90000]);
   const [brands, setBrands] = useState<string[]>([]);
   const [rating, setRating] = useState<number | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
 
-  // const filteredProducts = products.filter(
-  //   (p: any) =>
-  //     p.price <= price[0] &&
-  //     (brands.length === 0 || brands.includes(p.brand)) &&
-  //     (!rating || p.rating >= rating) &&
-  //     (categories.length === 0 || categories.includes(p.category))
-  // );
-
   const filteredProducts = products.filter(
     (p: any) =>
       p.price <= price[0] &&
       (brands.length === 0 || brands.includes(p.brand)) &&
-      (categories.length === 0 || categories.includes(p.category))
+      (categories.length === 0 || categories.includes(p.category)),
   );
 
   return (
@@ -51,7 +40,7 @@ export const AllProducts = ({
       </div>
       <ProductCard
         products={filteredProducts}
-        itemCount={i}
+        itemCount={100}
         classCSS="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4"
       />
     </div>

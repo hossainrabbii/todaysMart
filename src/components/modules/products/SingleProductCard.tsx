@@ -54,11 +54,11 @@ export const SingleProductCard = ({ product }: { product: any }) => {
 
   return (
     <div className="my-8">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4 bg-white rounded-lg p-8 mb-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4 bg-white rounded-lg p-4 md:p-8 mb-12">
         <ImageTabs images={imageUrls} />
 
         <div className="mt-6">
-          <h4 className="text-purple-800 font-semibold mb-2 text-2xl">
+          <h4 className="text-purple-800 font-semibold mb-2 text-lg md:text-2xl">
             {name}
           </h4>
 
@@ -88,7 +88,7 @@ export const SingleProductCard = ({ product }: { product: any }) => {
             </p>
           ))}
 
-          <p className="mt-4">Color: {selectedColor}</p>
+          {/* <p className="mt-4">Color: {selectedColor}</p>
           {availableColors.map((c: string, key: number) => (
             <Button
               key={key}
@@ -100,9 +100,11 @@ export const SingleProductCard = ({ product }: { product: any }) => {
             >
               {c}
             </Button>
-          ))}
+          ))} */}
 
-          <div className="flex gap-6">
+          <hr className="my-3" />
+
+          <div className="flex gap-2">
             <Button
               variant="outline"
               className="rounded-md bg-orange-500 text-white hover:bg-orange-600 hover:text-white mt-2"

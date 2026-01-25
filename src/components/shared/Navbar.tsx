@@ -68,7 +68,7 @@ const Navbar = () => {
             </span>
           </Link>
         </div>
-        <div className="w-[55%] hidden lg:block">
+        <div className="w-[50%] hidden lg:block">
           {/* <div className="flex items-center bg-white rounded">
             <Input className="bg-white" placeholder="Search" />
             <div className="bg-white p-1 cursor-pointer">
@@ -103,26 +103,35 @@ const Navbar = () => {
                       {products?.length > 0 && <span>{products?.length}</span>}
                     </Button>
                   </Link>
-                  <div className="flex flex-start items-center border border-gray-600 px-1 rounded-sm">
-                    <Button className="bg-red">
-                      <User2Icon />
-                    </Button>
-                    <div>
-                      {/* <h3 className="text-white">Account</h3> */}
-                      <Link
-                        href="/register"
-                        className="text-gray-500 hover:text-[#EF4A23] text-[12px]"
-                      >
-                        Register
-                      </Link>{" "}
-                      <span className="text-white">or </span>
-                      <Link
-                        href="/login"
-                        className="text-gray-500 hover:text-[#EF4A23] text-[12px]"
-                      >
-                        Login
-                      </Link>
+                  <div className="hidden md:block">
+                    <div className="flex flex-start items-center border border-gray-600 px-1 rounded-sm">
+                      <Button className="bg-red">
+                        <User2Icon />
+                      </Button>
+                      <div>
+                        {/* <h3 className="text-white">Account</h3> */}
+                        <Link
+                          href="/register"
+                          className="text-gray-500 hover:text-[#EF4A23] text-[12px]"
+                        >
+                          Register
+                        </Link>{" "}
+                        <span className="text-white">or </span>
+                        <Link
+                          href="/login"
+                          className="text-gray-500 hover:text-[#EF4A23] text-[12px] mr-3"
+                        >
+                          Login
+                        </Link>
+                      </div>
                     </div>
+                  </div>
+                  <div className="block md:hidden cursor-pointer bg-[#EF4A23] hover:bg-[#fF4A23] rounded-md">
+                    <Link href="/login" className="">
+                      <Button className="bg-red cursor-pointer">
+                        <User2Icon />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               ) : (

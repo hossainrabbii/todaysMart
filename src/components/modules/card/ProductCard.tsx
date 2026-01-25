@@ -29,7 +29,7 @@ const ProductCard = ({
     <>
       {/*  */}
       <div className={`${classCSS}`}>
-        {products.slice(0, itemCount.itemCount).map((prod: IProductType) => (
+        {products.slice(0, itemCount).map((prod: IProductType) => (
           <div
             className="border shadow-md p-4 rounded-md my-2 bg-white flex flex-col justify-between"
             key={prod?.slug}

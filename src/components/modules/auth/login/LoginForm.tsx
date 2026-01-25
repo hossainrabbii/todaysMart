@@ -85,7 +85,7 @@ const LoginForm = () => {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="w-md">
+              <FormItem className="w-3xs md:w-md">
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
@@ -103,7 +103,7 @@ const LoginForm = () => {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="w-md">
+              <FormItem className="w-3xs md:w-md">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
@@ -120,8 +120,13 @@ const LoginForm = () => {
           <ReCAPTCHA
             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY as string}
             onChange={handleReCaptcha}
+            className="w-3xs"
           />
-          <Button type="submit" disabled={!reCaptchaStatus} className="w-full">
+          <Button
+            type="submit"
+            disabled={!reCaptchaStatus}
+            className="w-3xs md:w-full"
+          >
             {isSubmitting ? <span>Login...</span> : <span>Login</span>}
           </Button>
           {/* <Button type="submit" className="w-full">
@@ -133,7 +138,7 @@ const LoginForm = () => {
       <Link href="/register">
         <Button
           variant="outline"
-          className="w-full cursor-pointer border-purple-300"
+          className="w-3xs md:w-full cursor-pointer shadow-sm"
         >
           Register
         </Button>

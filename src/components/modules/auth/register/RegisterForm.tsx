@@ -71,7 +71,7 @@ const RegisterForm = () => {
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem className="w-md">
+              <FormItem className="w-3sm md:w-md">
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input
@@ -89,7 +89,7 @@ const RegisterForm = () => {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="w-md">
+              <FormItem className="w-3sm md:w-md">
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
@@ -107,7 +107,7 @@ const RegisterForm = () => {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="w-md">
+              <FormItem className="w-3sm md:w-md">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
@@ -125,7 +125,7 @@ const RegisterForm = () => {
             control={form.control}
             name="confirmPassword"
             render={({ field }) => (
-              <FormItem className="w-md">
+              <FormItem className="w-3sm md:w-md">
                 <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
                   <Input
@@ -154,10 +154,7 @@ const RegisterForm = () => {
       </Form>
       <p className="text-center mt-8">Already have an account?</p>
       <Link href="/login">
-        <Button
-          variant="outline"
-          className="w-full cursor-pointer border-purple-300"
-        >
+        <Button variant="outline" className="w-full cursor-pointer shadow-sm">
           Login
         </Button>
       </Link>

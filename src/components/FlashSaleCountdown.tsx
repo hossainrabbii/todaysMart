@@ -23,31 +23,37 @@ export const FlashSaleCountdown = () => {
   const format = (num: number) => num.toString().padStart(2, "0");
 
   return (
-    <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center text-white mx-auto w-full">
-      <h2 className="text-3xl font-bold mb-4">🔥 Flash Sale!</h2>
-      <p className="mb-6 text-lg">Hurry up! Sale ends in:</p>
-      <div className="flex gap-4 text-center">
-        {/* Hours */}
-        <div className="bg-black/30 backdrop-blur-md rounded-lg p-4 w-20 flex flex-col items-center animate-pulse">
-          <span className="text-4xl font-bold">{format(hours)}</span>
-          <span className="text-sm uppercase mt-1">Hours</span>
+    // <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 p-6 rounded-2xl shadow-lg flex flex-col  text-white mx-auto w-full">
+    <div className="flex gap-6 flex-col md:flex-row justify-between items-center my-6">
+      <div className="flex flex-col md:flex-row gap-6 items-center text-white">
+        <div>
+          <h2 className="text-3xl font-bold mb-2">🔥 Flash Sale!</h2>
+          <p className="text-lg">Hurry up! Sale ends in:</p>
         </div>
+        <div className="flex gap-4 text-center">
+          {/* Hours */}
+          <div className="bg-black/30 backdrop-blur-md rounded-lg p-4 w-20 flex flex-col items-center animate-pulse justify-between">
+            <span className="text-4xl font-bold">{format(hours)}</span>
+            <span className="text-sm uppercase mt-1">Hours</span>
+          </div>
 
-        {/* Minutes */}
-        <div className="bg-black/30 backdrop-blur-md rounded-lg p-4 w-20 flex flex-col items-center animate-pulse delay-75">
-          <span className="text-4xl font-bold">{format(minutes)}</span>
-          <span className="text-sm uppercase mt-1">Minutes</span>
-        </div>
+          {/* Minutes */}
+          <div className="bg-black/30 backdrop-blur-md rounded-lg p-4 w-20 flex flex-col items-center animate-pulse delay-75 justify-between">
+            <span className="text-4xl font-bold">{format(minutes)}</span>
+            <span className="text-sm uppercase mt-1">Minutes</span>
+          </div>
 
-        {/* Seconds */}
-        <div className="bg-black/30 backdrop-blur-md rounded-lg p-4 w-20 flex flex-col items-center animate-pulse delay-150">
-          <span className="text-4xl font-bold">{format(seconds)}</span>
-          <span className="text-sm uppercase mt-1">Seconds</span>
+          {/* Seconds */}
+          <div className="bg-black/30 backdrop-blur-md rounded-lg p-4 w-20 flex flex-col items-center animate-pulse delay-150 justify-between">
+            <span className="text-4xl font-bold">{format(seconds)}</span>
+            <span className="text-sm uppercase mt-1">Seconds</span>
+          </div>
         </div>
       </div>
-      <button className="mt-6 px-6 py-3 bg-yellow-400 text-black font-bold rounded-lg shadow-lg hover:bg-yellow-500 transition-all">
+      <button className="px-6 py-3 bg-yellow-400 text-black font-bold rounded-lg shadow-lg hover:bg-yellow-500 transition-all">
         Shop Now
       </button>
     </div>
+    // </div>
   );
 };
